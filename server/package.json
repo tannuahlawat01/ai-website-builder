@@ -9,5 +9,22 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.13.23",
+    "@google/generative-ai": "^0.24.1",
+    "@prisma/client": "6.19.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
+    "express-async-errors": "^3.1.1",
+    "groq-sdk": "^1.2.1",
+    "helmet": "^8.2.0",
+    "morgan": "^1.11.0",
+    "stripe": "^22.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "6.19.3"
+  }
 }

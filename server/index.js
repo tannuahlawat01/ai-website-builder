@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const userRoutes = require('./routes/user.routes');
+const generateRoutes = require('./routes/generate.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/generate', generateRoutes);
 
 // Health check
 app.get('/health', async (req, res) => {
