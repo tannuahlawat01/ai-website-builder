@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import { useAuth } from '@clerk/clerk-react'
+import toast from 'react-hot-toast'
 import { setAuthToken, getUserProfile, getProjects, generateWebsite, deleteProject as deleteProjectAPI } from '../lib/api'
 
 const AppContext = createContext(null)
@@ -32,10 +33,14 @@ export const AppProvider = ({ children }) => {
   }, [getToken])
 
   const fetchProjects = useCallback(async () => {
-    await getAuthToken()
-    const response = await getProjects()
-    setProjects(response.data.projects)
-    return response.data.projects
+    try {
+      await getAuthToken()
+      const response = await getProjects()
+      setProjects(response.data.projects)
+      return response.data.projects
+    } catch (error) {
+      console.error('fetchProjects error:', error)
+    }
   }, [getAuthToken])
 
   const generate = useCallback(async (prompt) => {
@@ -46,23 +51,32 @@ export const AppProvider = ({ children }) => {
       const { project, remainingCredits } = response.data
       setCredits(remainingCredits)
       setProjects(prev => [project, ...prev])
+      toast.success('Website generated successfully!')
       return project
+    } catch (error) {
+      const message = error.response?.data?.error || 'Generation failed'
+      toast.error(message)
+      throw error
     } finally {
       setIsLoading(false)
     }
   }, [getAuthToken])
 
   const removeProject = useCallback(async (id) => {
-    await getAuthToken()
-    await deleteProjectAPI(id)
-    setProjects(prev => prev.filter(p => p.id !== id))
+    try {
+      await getAuthToken()
+      await deleteProjectAPI(id)
+      setProjects(prev => prev.filter(p => p.id !== id))
+      toast.success('Project deleted')
+    } catch (error) {
+      toast.error('Failed to delete project')
+    }
   }, [getAuthToken])
 
   const updateCredits = useCallback((newCredits) => {
     setCredits(newCredits)
   }, [])
 
-  // Auto fetch user when signed in
   useEffect(() => {
     if (isLoaded && isSignedIn) {
       fetchUser()
