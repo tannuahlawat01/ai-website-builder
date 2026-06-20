@@ -123,7 +123,7 @@ const ProjectPage = () => {
     <div className="h-screen bg-zinc-950 flex flex-col overflow-hidden">
 
       {/* Top Bar */}
-      <div className="h-14 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between px-4 flex-shrink-0">
+      <div className="h-16 bg-zinc-900/80 backdrop-blur-xl border-b border-zinc-800 flex items-center justify-between px-6 flex-shrink-0">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/dashboard')}
@@ -171,7 +171,7 @@ const ProjectPage = () => {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Left: Chat Panel */}
-        <div className="w-80 bg-zinc-900 border-r border-zinc-800 flex flex-col flex-shrink-0">
+        <div className="w-[420px] bg-zinc-900/60 backdrop-blur-xl border-r border-zinc-800 flex flex-col flex-shrink-0">
 
           {/* Original Prompt */}
           <div className="p-4 border-b border-zinc-800">
@@ -243,7 +243,7 @@ const ProjectPage = () => {
           </div>
 
           {/* Input Area */}
-          <div className="p-4 border-t border-zinc-800">
+          <div className="p-4 border-t border-zinc-800 bg-zinc-900/70 backdrop-blur-xl">
             <div className="flex flex-col gap-2">
               <textarea
                 value={instruction}
@@ -306,7 +306,7 @@ const ProjectPage = () => {
           </div>
 
           {/* Preview Area */}
-          <div className="flex-1 bg-zinc-950 overflow-hidden flex items-start justify-center p-3">
+          <div className="flex-1 bg-[#09090b] overflow-hidden flex items-start justify-center p-6">
             {isRefining ? (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
