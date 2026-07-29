@@ -51,6 +51,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message || 'Internal server error' });
 });
 
+const keepAlive = require('./lib/keepalive')
+if (process.env.NODE_ENV === 'production') {
+  keepAlive(process.env.RENDER_URL || 'https://your-render-url.onrender.com')
+}
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
