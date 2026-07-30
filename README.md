@@ -2,17 +2,19 @@
 
 A production-ready AI SaaS application that generates complete, beautiful websites from natural language descriptions. Built with the PERN stack (PostgreSQL, Express, React, Node.js) and powered by LLaMA 3.3 70B via Groq API.
 
-## Live Demo
+## 🌐 Live Demo
 
-**[https://ai-website-builder-gamma-bice.vercel.app](https://ai-website-builder-gamma-bice.vercel.app)**
+**[https://ai-website-builder-gvp3rzp05-tannuahlawat123.vercel.app](https://ai-website-builder-gvp3rzp05-tannuahlawat123.vercel.app)**
+
+> Backend API: https://ai-website-builder-8pcj.onrender.com
 
 ---
 
-## Features
+## ✨ Features
 
 - **AI Website Generation** — Describe any website in plain English and get complete HTML/CSS/JS in under 10 seconds
-- **Chat-Style Refinement** — Iteratively improve generated websites through natural language instructions (original feature)
-- **Live Preview** — See generated websites rendered in real-time with device toggle (Desktop/Tablet/Mobile)
+- **Chat-Style Refinement** — Iteratively improve generated websites through natural language instructions *(original feature)*
+- **Live Preview** — See generated websites rendered in real-time with device toggle (Desktop / Tablet / Mobile)
 - **Download & Export** — Download complete HTML files you fully own, copy to clipboard, or open in new tab
 - **Credit System** — Usage-based credit system with 5 free credits on signup
 - **Stripe Payments** — Purchase credit packages via Stripe Checkout with webhook-verified processing
@@ -21,7 +23,7 @@ A production-ready AI SaaS application that generates complete, beautiful websit
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
@@ -34,25 +36,25 @@ A production-ready AI SaaS application that generates complete, beautiful websit
 | AI Model | LLaMA 3.3 70B via Groq | Website generation and refinement |
 | Payments | Stripe | Credit purchase processing |
 | Frontend Deploy | Vercel | CDN-optimized static hosting |
-| Backend Deploy | Railway | Persistent Node.js server hosting |
+| Backend Deploy | Render | Persistent Node.js server hosting |
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ```
 User Browser
     └── React Frontend (Vercel CDN)
-            └── Express REST API (Railway)
-                    ├── Clerk SDK (JWT verification)
-                    ├── Prisma ORM → PostgreSQL (Neon)
-                    ├── Groq SDK → LLaMA 3.3 70B
-                    └── Stripe SDK (payments + webhooks)
+            └── Express REST API (Render)
+                    ├── Clerk SDK        → JWT verification
+                    ├── Prisma ORM       → PostgreSQL (Neon)
+                    ├── Groq SDK         → LLaMA 3.3 70B
+                    └── Stripe SDK       → Payments + Webhooks
 ```
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -121,7 +123,7 @@ npm run dev
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 ai-website-builder/
@@ -139,7 +141,7 @@ ai-website-builder/
 │   │   │   ├── BuilderPage.jsx    # AI generation interface
 │   │   │   ├── ProjectPage.jsx    # Project view with chat refinement
 │   │   │   └── PricingPage.jsx    # Credit packages with Stripe checkout
-│   │   ├── App.jsx                # React Router setup with protected routes
+│   │   ├── App.jsx                # React Router + protected routes
 │   │   ├── main.jsx               # ClerkProvider + AppProvider setup
 │   │   └── index.css              # Global styles + Tailwind v4
 │   └── vercel.json                # SPA routing rewrite rules
@@ -150,7 +152,7 @@ ai-website-builder/
     │   ├── project.controller.js  # CRUD + refine + regenerate
     │   └── payment.controller.js  # Stripe checkout + webhook handler
     ├── middleware/
-    │   └── auth.js                # Clerk JWT verification + find-or-create user
+    │   └── auth.js                # Clerk JWT verification + find-or-create
     ├── routes/
     │   ├── user.routes.js
     │   ├── generate.routes.js
@@ -158,16 +160,16 @@ ai-website-builder/
     │   └── payment.routes.js
     ├── lib/
     │   ├── prisma.js              # PrismaClient singleton
-    │   └── gemini.js              # Groq/LLaMA integration (generateWebsite + refineWebsite)
+    │   └── gemini.js              # Groq/LLaMA integration
     ├── prisma/
-    │   └── schema.prisma          # User, Project, CreditTransaction models
-    ├── index.js                   # Express server entry point
-    └── railway.json               # Railway deployment configuration
+    │   └── schema.prisma          # Database schema
+    ├── index.js                   # Express server entry
+    └── railway.json               # Deployment configuration
 ```
 
 ---
 
-## Database Schema
+## 🗄️ Database Schema
 
 ```prisma
 model User {
@@ -210,7 +212,7 @@ model CreditTransaction {
 
 ---
 
-## API Endpoints
+## 📡 API Endpoints
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
@@ -218,7 +220,7 @@ model CreditTransaction {
 | GET | /api/v1/user/profile | Yes | Get current user profile |
 | GET | /api/v1/user/credits | Yes | Get credit balance |
 | PATCH | /api/v1/user/profile | Yes | Update user name |
-| POST | /api/v1/generate | Yes | Generate a website from prompt |
+| POST | /api/v1/generate | Yes | Generate website from prompt |
 | GET | /api/v1/projects | Yes | List all user projects |
 | GET | /api/v1/projects/:id | Yes | Get single project with HTML |
 | PATCH | /api/v1/projects/:id | Yes | Update project title/status |
@@ -226,59 +228,39 @@ model CreditTransaction {
 | POST | /api/v1/projects/:id/regenerate | Yes | Regenerate with new prompt |
 | POST | /api/v1/projects/:id/refine | Yes | Refine with chat instruction |
 | POST | /api/v1/payment/checkout | Yes | Create Stripe checkout session |
-| POST | /api/v1/payment/webhook | No | Stripe webhook (add credits) |
+| POST | /api/v1/payment/webhook | No | Stripe webhook handler |
 
 ---
 
-## Key Engineering Decisions
+## 🧠 Key Engineering Decisions
 
-### PostgreSQL over MongoDB
-Data relationships (User → Projects → CreditTransactions) are fixed and well-defined. PostgreSQL enforces referential integrity at the database level with cascade deletes — deleting a user automatically removes all their data.
+**PostgreSQL over MongoDB**
+Data relationships (User → Projects → CreditTransactions) are fixed and well-defined. PostgreSQL enforces referential integrity with cascade deletes — deleting a user automatically removes all their data.
 
-### Prisma ORM
-Generates a type-safe database client from the schema. Editor autocomplete catches field name errors before runtime. Schema-as-code means database structure is version-controlled alongside application code.
+**Prisma ORM**
+Generates a type-safe database client from the schema. Editor autocomplete catches field name errors before runtime. Schema-as-code keeps database structure version-controlled alongside application code.
 
-### Clerk for Authentication
-Handles JWT creation/verification, OAuth (Google), email verification, and session management. Implementing this from scratch would take 2+ weeks and introduce security risks. Engineering effort was focused on the AI pipeline instead.
+**Clerk for Authentication**
+Handles JWT, OAuth (Google), email verification, and session management in ~10 lines of code. Engineering effort focused on the AI pipeline rather than auth infrastructure.
 
-### Find-or-Create Pattern in Middleware
-User records are created on first API call rather than a dedicated signup endpoint. Self-healing — if the frontend crashes mid-signup, the user is created on their next request automatically. Prevents orphan states between Clerk and our database.
+**Find-or-Create Pattern in Middleware**
+User records are created on the first API call rather than a dedicated signup endpoint. Self-healing — prevents orphan states between Clerk and the database if the frontend crashes during signup.
 
-### Groq/LLaMA over OpenAI
-Free tier with no regional restrictions (important for India-based development). LLaMA 3.3 70B has a 1M token context window which supports the iterative refinement feature — sending existing HTML back for modification.
+**Groq/LLaMA over OpenAI**
+Free tier with no regional restrictions. LLaMA 3.3 70B has a 1M token context window which enables the iterative refinement feature — sending existing HTML back for targeted modification.
 
-### Stripe Webhooks for Payment Confirmation
-Payment confirmation happens server-to-server via Stripe webhooks, not frontend callbacks. The frontend cannot be trusted to confirm payment — it can be manipulated. Webhook signature verification ensures requests genuinely come from Stripe.
+**Stripe Webhooks for Payment Confirmation**
+Payment confirmation happens server-to-server via webhooks, not frontend callbacks. The frontend cannot be trusted to confirm payments — it can be manipulated. Webhook signature verification ensures requests genuinely come from Stripe.
 
-### Chat-Style Iterative Refinement (Original Feature)
-Users can refine generated websites through natural language chat instructions. The existing HTML is sent back to LLaMA with the instruction. HTML is truncated to 8000 characters before sending to stay within context limits while preserving meaningful context — a deliberate trade-off between context completeness and API cost/latency.
+**Chat-Style Iterative Refinement (Original Feature)**
+Users refine generated websites through natural language chat. Existing HTML is sent back to LLaMA with the instruction. HTML is truncated to 8000 characters before sending — a deliberate trade-off between context completeness and API cost/latency.
 
-### Singleton PrismaClient
-A single PrismaClient instance is shared across the entire application via Node.js global object. Prevents connection pool exhaustion — especially important in development where nodemon restarts files on every save, which would create new connections without this pattern.
-
----
-
-## Deployment
-
-### Frontend (Vercel)
-- Auto-detected Vite project
-- `vercel.json` rewrites all routes to `index.html` for React Router SPA support
-- Environment variables: `VITE_CLERK_PUBLISHABLE_KEY`, `VITE_API_BASE_URL`
-
-### Backend (Railway)
-- Nixpacks builder auto-detects Node.js
-- `railway.json` specifies `node index.js` as start command
-- Environment variables set in Railway dashboard
-- Port auto-assigned by Railway via `process.env.PORT`
-
-### Database (Neon)
-- Serverless PostgreSQL — scales to zero when unused
-- Singapore region (closest available to India)
-- Connection pooling enabled for production
+**PrismaClient Singleton**
+One PrismaClient instance shared across the entire app via Node.js global object. Prevents connection pool exhaustion — especially critical in development where nodemon restarts would create new connections on every file save.
 
 ---
 
-## Credit Packages
+## 💳 Credit Packages
 
 | Package | Credits | Price |
 |---------|---------|-------|
@@ -286,17 +268,37 @@ A single PrismaClient instance is shared across the entire application via Node.
 | Popular | 50 | $14.99 |
 | Pro | 150 | $34.99 |
 
-Credits never expire. Every new account receives 5 free credits on signup.
+Every new account receives **5 free credits** on signup. Credits never expire.
 
 ---
 
-## Author
+## 🚢 Deployment
+
+**Frontend — Vercel**
+- Auto-detected Vite project
+- `vercel.json` rewrites all routes to `index.html` for React Router SPA support
+- Environment: `VITE_CLERK_PUBLISHABLE_KEY`, `VITE_API_BASE_URL`
+
+**Backend — Render**
+- Node.js web service, free tier
+- Build command: `npm install && npx prisma@6.19.3 generate`
+- Start command: `node index.js`
+- Environment variables set in Render dashboard
+
+**Database — Neon**
+- Serverless PostgreSQL — scales to zero when unused
+- Singapore region (closest available to India)
+
+---
+
+## 👩‍💻 Author
 
 **Tannu Ahlawat**
 B.Tech AI & ML — IGDTUW Delhi
+GitHub: [@tannuahlawat01](https://github.com/tannuahlawat01)
 
 ---
 
-## License
+## 📄 License
 
 MIT — feel free to use this project as a reference or starting point.
